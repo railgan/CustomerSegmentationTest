@@ -1,5 +1,6 @@
 package ch.ice.file;
 
+import java.awt.List;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -14,6 +15,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 public class ExcelParser {
 
 	private static String companyName;
+	private static List companies = new List();
 	
 	public static void readXLSXFile() throws IOException
 	{
@@ -44,6 +46,7 @@ public class ExcelParser {
 				if (cell.getCellType() == XSSFCell.CELL_TYPE_STRING)
 				{
 					companyName = cell.getStringCellValue();
+					companies.add(companyName);
 				}
 				else if(cell.getCellType() == XSSFCell.CELL_TYPE_NUMERIC)
 				{
