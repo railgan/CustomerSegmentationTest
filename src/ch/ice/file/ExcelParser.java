@@ -15,10 +15,13 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class ExcelParser {
 
-	private static String companyName;
-	private static ArrayList<String> companies = new ArrayList();
+	private static String companyNamePOS;
+	private static ArrayList<String> companiesPOS = new ArrayList();
 	
-	public static void readXLSXFile() throws IOException
+	private static String companyNameRegister;
+	private static ArrayList<String> companiesRegister = new ArrayList();
+	
+	public static ArrayList<String> readPOSFile() throws IOException
 	{
 		
 		//Where the Test file has to be located
@@ -46,8 +49,8 @@ public class ExcelParser {
 		
 				if (cell.getCellType() == XSSFCell.CELL_TYPE_STRING)
 				{
-					companyName = cell.getStringCellValue();
-					companies.add(companyName);
+					companyNamePOS = cell.getStringCellValue();
+					companiesPOS.add(companyNamePOS);
 				}
 				else if(cell.getCellType() == XSSFCell.CELL_TYPE_NUMERIC)
 				{
@@ -58,11 +61,57 @@ public class ExcelParser {
 					//U Can Handel Boolean, Formula, Errors
 				}
 			}
-			System.out.println();
+		 
 		}
 		}
-	
+		return companiesPOS;
 	}
+	
+	
+	
+	public static ArrayList<String> readRegisterFile() throws IOException
+	{
+		//Where the Test file has to be located
+				InputStream ExcelFileToRead = new FileInputStream("C:/Javatest/TestRegister.xlsx");
+				XSSFWorkbook  wb = new XSSFWorkbook(ExcelFileToRead);
+				
+				XSSFWorkbook test = new XSSFWorkbook(); 
+				
+				XSSFSheet sheet = wb.getSheetAt(0);
+				XSSFRow row; 
+				XSSFCell cell;
+
+				Iterator rows = sheet.rowIterator();
+
+				while (rows.hasNext())
+				{
+					row=(XSSFRow) rows.next();
+					Iterator cells = row.cellIterator();
+					while (cells.hasNext())
+					{
+						cell=(XSSFCell) cells.next();
+						if(cell.getColumnIndex()==1){
+				
+						if (cell.getCellType() == XSSFCell.CELL_TYPE_STRING)
+						{
+							companyNameRegister = cell.getStringCellValue();
+							companiesRegister.add(companyNameRegister);
+						}
+						else if(cell.getCellType() == XSSFCell.CELL_TYPE_NUMERIC)
+						{
+							System.out.print(cell.getNumericCellValue()+" ");
+						}
+						else
+						{
+							//U Can Handel Boolean, Formula, Errors
+						}
+					}
+				 
+				}
+				}
+		return companiesRegister;
+	}
+	
 
 
 
