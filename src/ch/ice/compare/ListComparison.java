@@ -15,7 +15,7 @@ public class ListComparison {
 			if(Register.contains(posCompany)){ 
 				//posSegment = "Medical"; 
 				medical++;
-				System.out.println(POS.get(i));
+				System.out.println("Medical Company: " + POS.get(i));
 			}
 			else{ 
 				//posSegment = "Other";

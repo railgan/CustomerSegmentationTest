@@ -52,8 +52,10 @@ public class ExcelParser {
 				{
 					companyNamePOS = cell.getStringCellValue();
 					
-					//Removes Special Characters and Whitespaces
+					//Removes Special Characters and Whitespaces & LowerCase
 					companyNamePOS = companyNamePOS.replaceAll("[\\W]","");
+					companyNamePOS = companyNamePOS.toLowerCase();
+					
 					companiesPOS.add(companyNamePOS);
 				}
 				else if(cell.getCellType() == XSSFCell.CELL_TYPE_NUMERIC)
@@ -103,8 +105,10 @@ public class ExcelParser {
 						{
 							companyNameRegister = cell.getStringCellValue();
 							
-							//Removes Special Characters and Whitespaces
+							//Removes Special Characters and Whitespaces & LowerCase
 							companyNameRegister = companyNameRegister.replaceAll("[\\W]","");
+							companyNameRegister = companyNameRegister.toLowerCase();
+							
 							companiesRegister.add(companyNameRegister);
 						}
 						else if(cell.getCellType() == XSSFCell.CELL_TYPE_NUMERIC)
