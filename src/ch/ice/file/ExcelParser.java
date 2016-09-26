@@ -20,13 +20,13 @@ public class ExcelParser {
 	
 	// Variables in which the Corporate List of Companie Names can be Found
 	private static String companyNameRegister;
-	public static ArrayList<String> companiesRegister = new ArrayList();
+	private static ArrayList<String> companiesRegister = new ArrayList();
 	
 	public static ArrayList<String> readPOSFile() throws IOException
 	{
 		
 		//Where the Test file has to be located
-		InputStream ExcelFileToRead = new FileInputStream("C:/Javatest/Test.xlsx");
+		InputStream ExcelFileToRead = new FileInputStream("C:/Javatest/POS.xlsx");
 		XSSFWorkbook  wb = new XSSFWorkbook(ExcelFileToRead);
 		
 		XSSFWorkbook test = new XSSFWorkbook(); 
@@ -65,7 +65,10 @@ public class ExcelParser {
 		 
 		}
 		}
+		System.out.println("POS File Read");
+		System.out.println(companiesPOS);
 		return companiesPOS;
+		
 	}
 	
 	
@@ -73,25 +76,26 @@ public class ExcelParser {
 	public static ArrayList<String> readRegisterFile() throws IOException
 	{
 		//Where the Test file has to be located
-				InputStream ExcelFileToRead = new FileInputStream("C:/Javatest/TestRegister.xlsx");
-				XSSFWorkbook  wb = new XSSFWorkbook(ExcelFileToRead);
+		InputStream ExcelFileToRead = new FileInputStream("C:/Javatest/Medical.xlsx");
+		XSSFWorkbook  wb = new XSSFWorkbook(ExcelFileToRead);
+		
+		XSSFWorkbook test = new XSSFWorkbook(); 
+		
+		XSSFSheet sheet = wb.getSheetAt(0);
+		XSSFRow row; 
+		XSSFCell cell;
 				
-				XSSFWorkbook test = new XSSFWorkbook(); 
-				
-				XSSFSheet sheet = wb.getSheetAt(0);
-				XSSFRow row; 
-				XSSFCell cell;
-
 				Iterator rows = sheet.rowIterator();
 
 				while (rows.hasNext())
-				{
+				{ 
 					row=(XSSFRow) rows.next();
 					Iterator cells = row.cellIterator();
 					while (cells.hasNext())
 					{
 						cell=(XSSFCell) cells.next();
-						if(cell.getColumnIndex()==1){
+						if(cell.getColumnIndex()==0){
+							
 				
 						if (cell.getCellType() == XSSFCell.CELL_TYPE_STRING)
 						{
@@ -110,6 +114,8 @@ public class ExcelParser {
 				 
 				}
 				}
+				System.out.println("CompanieRegisterRead");
+				System.out.println(companiesRegister);
 		return companiesRegister;
 	}
 	
