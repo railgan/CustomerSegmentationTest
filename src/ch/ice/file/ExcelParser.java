@@ -22,6 +22,9 @@ public class ExcelParser {
 	private static String companyNameRegister;
 	private static ArrayList<String> companiesRegister = new ArrayList();
 	
+	private static boolean removeSpecialCharacters = true;
+	private static boolean removeCapitalLetters = true;
+	
 	public static ArrayList<String> readPOSFile() throws IOException
 	{
 		
@@ -52,10 +55,14 @@ public class ExcelParser {
 				{
 					companyNamePOS = cell.getStringCellValue();
 					
-					//Removes Special Characters and Whitespaces & LowerCase
-					companyNamePOS = companyNamePOS.replaceAll("[\\W]","");
-					companyNamePOS = companyNamePOS.toLowerCase();
 					
+					//Removes Special Characters and Whitespaces & LowerCase
+					if(removeSpecialCharacters){
+						companyNamePOS = companyNamePOS.replaceAll("[\\W]","");
+					}
+					if(removeCapitalLetters){
+					companyNamePOS = companyNamePOS.toLowerCase();
+					}
 					companiesPOS.add(companyNamePOS);
 				}
 				else if(cell.getCellType() == XSSFCell.CELL_TYPE_NUMERIC)
@@ -106,8 +113,12 @@ public class ExcelParser {
 							companyNameRegister = cell.getStringCellValue();
 							
 							//Removes Special Characters and Whitespaces & LowerCase
+							if(removeSpecialCharacters){
 							companyNameRegister = companyNameRegister.replaceAll("[\\W]","");
+							}
+							if(removeCapitalLetters){
 							companyNameRegister = companyNameRegister.toLowerCase();
+							}
 							
 							companiesRegister.add(companyNameRegister);
 						}
