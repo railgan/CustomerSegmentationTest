@@ -17,12 +17,12 @@ public class ListComparison {
 				medical++;
 			}
 			else{ 
-				posSegment = "Other";
+				//posSegment = "Other";
 				othercompanies++;
 			}
 			
-			System.out.println("Medical: " + medical + " ; Other: " + othercompanies);
+			
 		}
- 
+		System.out.println("Medical: " + medical + " ; Other: " + othercompanies);
 	}
 }

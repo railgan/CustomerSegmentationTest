@@ -66,7 +66,6 @@ public class ExcelParser {
 		}
 		}
 		System.out.println("POS File Read");
-		System.out.println(companiesPOS);
 		return companiesPOS;
 		
 	}
@@ -114,8 +113,7 @@ public class ExcelParser {
 				 
 				}
 				}
-				System.out.println("CompanieRegisterRead");
-				System.out.println(companiesRegister);
+				System.out.println("Registry File read");
 		return companiesRegister;
 	}
 	
