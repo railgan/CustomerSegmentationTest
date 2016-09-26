@@ -1,6 +1,5 @@
 package ch.ice.file;
 
-import java.awt.List;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -21,7 +20,7 @@ public class ExcelParser {
 	
 	// Variables in which the Corporate List of Companie Names can be Found
 	private static String companyNameRegister;
-	private static ArrayList<String> companiesRegister = new ArrayList();
+	public static ArrayList<String> companiesRegister = new ArrayList();
 	
 	public static ArrayList<String> readPOSFile() throws IOException
 	{
