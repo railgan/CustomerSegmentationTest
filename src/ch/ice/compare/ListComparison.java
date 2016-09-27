@@ -24,6 +24,11 @@ public class ListComparison {
 			
 			
 		}
-		System.out.println("Medical: " + medical + " ; Other: " + othercompanies);
+		System.out.println(
+				"Amount Medical: " + medical + 
+				";\nAmount Other: " + othercompanies +
+				";\nRegister Size: " + Register.size() +
+				";\nTotal Amount of Companies: " + POS.size()
+				);
 	}
 }
