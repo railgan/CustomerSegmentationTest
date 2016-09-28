@@ -17,7 +17,7 @@ public class ListComparison {
 				//posSegment = "Medical"; 
 				segmentedList.add(i, "medical");
 				medical++;
-				System.out.println("Medical Company: " + POS.get(i));
+				
 			}
 			else{ 
 				//posSegment = "Other";

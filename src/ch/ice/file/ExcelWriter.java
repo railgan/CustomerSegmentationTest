@@ -1,15 +1,10 @@
 package ch.ice.file;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.CopyOption;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
-import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -30,20 +25,14 @@ public class ExcelWriter {
 		String oldExcelFile = "C:/Javatest/POS.xlsx";
 		
 		
-		File source = new File (oldExcelFile);
-		File destination = new File(excelFileName);
+		
 		int cellnum;
 		int rownum;
-		int mapCellNum;
-		String fileName;
-		CellStyle style = null;
+		
 		
 		//Copy the existing file
 		//copyFile( source, destination);
 		
-		
-		String sheetName = "Sheet1";//name of sheet
-
 		InputStream inp = new FileInputStream(oldExcelFile);
 		XSSFWorkbook wb = new XSSFWorkbook(inp);
 		System.out.println("ExcelFileRead");
@@ -69,7 +58,7 @@ public class ExcelWriter {
 				
 	
 				cell.setCellValue(object);
-				System.out.println("Wrote: " + segmentCustomerList.get(cellnum) + "\n in: " + rownum);
+			
 				
 			
 		}
@@ -85,12 +74,7 @@ public class ExcelWriter {
 		System.out.println("done");
 	}
 	
-	public static void copyFile(File source, File dest ) throws IOException {
-		CopyOption[] copyOptions = new CopyOption[]{
-			      StandardCopyOption.REPLACE_EXISTING,
-			    }; 
-	    Files.copy(source.toPath(), dest.toPath(), copyOptions);
-	}
+
 	}
 
 
