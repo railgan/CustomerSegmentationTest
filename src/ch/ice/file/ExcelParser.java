@@ -22,7 +22,7 @@ public class ExcelParser {
 	private static String companyNameRegister;
 	private static ArrayList<String> companiesRegister = new ArrayList();
 	
-	private static boolean removeSpecialCharacters = true;
+	private static boolean removeSpecialCharacters = false;
 	private static boolean removeCapitalLetters = true;
 	
 	public static ArrayList<String> readPOSFile() throws IOException

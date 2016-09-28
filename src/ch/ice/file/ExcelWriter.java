@@ -26,7 +26,7 @@ public class ExcelWriter {
 	
 	
 	
-	public static void writeXLSXFile(ArrayList<String> customerList) throws IOException {
+	public static void writeXLSXFile(ArrayList<String> segmentCustomerList) throws IOException {
 		
 		String excelFileName = "C:/Javatest/Segmented.xlsx";
 		String oldExcelFile = "C:/Javatest/POS.xlsx";
@@ -42,26 +42,28 @@ public class ExcelWriter {
 		copyFile( source, destination);
 		
 		
-		
 		String sheetName = "Sheet1";//name of sheet
 
 		XSSFWorkbook wb = new XSSFWorkbook();
 		XSSFSheet sheet = wb.createSheet(sheetName) ;
 		
 		rownum = 3;
+	
 		cellnum = 5;
 		
 		//iterating r number of rows
-		for (String object : customerList){
+		for (String object : segmentCustomerList){
 			///CODE
+
 			XSSFRow row = sheet.getRow(rownum++);
+			
 
 			//iterating c number of columns
-			for (int c=0;c < 5; c++ )
+			for (int c=0;c < segmentCustomerList.size(); c++ )
 			{
 				XSSFCell cell = row.createCell(c);
 	
-				cell.setCellValue("Cell "+" "+c);
+				cell.setCellValue(segmentCustomerList.get(c));
 			}
 		}
 		
