@@ -1,9 +1,13 @@
 package ch.ice.file;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.CopyOption;
 import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.xssf.usermodel.XSSFCell;
@@ -24,6 +28,8 @@ public class ExcelWriter {
 		
 		String excelFileName = "C:/Javatest/Segmented.xlsx";
 		String oldExcelFile = "C:/Javatest/POS.xlsx";
+		
+		
 		File source = new File (oldExcelFile);
 		File destination = new File(excelFileName);
 		int cellnum;
@@ -33,34 +39,41 @@ public class ExcelWriter {
 		CellStyle style = null;
 		
 		//Copy the existing file
-		copyFile( source, destination);
+		//copyFile( source, destination);
 		
 		
 		String sheetName = "Sheet1";//name of sheet
 
-		XSSFWorkbook wb = new XSSFWorkbook();
-		XSSFSheet sheet = wb.createSheet(sheetName) ;
+		InputStream inp = new FileInputStream(oldExcelFile);
+		XSSFWorkbook wb = new XSSFWorkbook(inp);
+		System.out.println("ExcelFileRead");
+		XSSFSheet sheet = wb.getSheetAt(0);
+		System.out.println("found wb Sheet");
 		
-		rownum = 3;
-	
+		rownum = 2;
 		cellnum = 5;
+		
 		
 		//iterating r number of rows
 		for (String object : segmentCustomerList){
 			///CODE
-
+			
 			XSSFRow row = sheet.getRow(rownum++);
 			
 
 			//iterating c number of columns
-			for (int c=0;c < segmentCustomerList.size(); c++ )
-			{
-				XSSFCell cell = row.createCell(cellnum);
+		//	for (int c=0;c < segmentCustomerList.size(); c++ )
+		//	for (cellnum = 5;cellnum<20;cellnum++)
+			
+				XSSFCell cell = sheet.getRow(row.getRowNum()).createCell(cellnum);
+				
 	
-				cell.setCellValue(segmentCustomerList.get(c));
-			}
+				cell.setCellValue(object);
+				System.out.println("Wrote: " + segmentCustomerList.get(cellnum) + "\n in: " + rownum);
+				
+			
 		}
-		
+		System.out.println("Ready for fileOut");
 
 		FileOutputStream fileOut = new FileOutputStream(excelFileName);
 
@@ -68,10 +81,15 @@ public class ExcelWriter {
 		wb.write(fileOut);
 		fileOut.flush();
 		fileOut.close();
+		
+		System.out.println("done");
 	}
 	
-	public static void copyFile(File source, File dest) throws IOException {
-	    Files.copy(source.toPath(), dest.toPath());
+	public static void copyFile(File source, File dest ) throws IOException {
+		CopyOption[] copyOptions = new CopyOption[]{
+			      StandardCopyOption.REPLACE_EXISTING,
+			    }; 
+	    Files.copy(source.toPath(), dest.toPath(), copyOptions);
 	}
 	}
 
