@@ -55,7 +55,7 @@ public class ExcelWriter {
 			//iterating c number of columns
 			for (int c=0;c < segmentCustomerList.size(); c++ )
 			{
-				XSSFCell cell = row.createCell(c);
+				XSSFCell cell = row.createCell(cellnum);
 	
 				cell.setCellValue(segmentCustomerList.get(c));
 			}
