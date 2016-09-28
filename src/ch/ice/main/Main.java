@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import ch.ice.compare.ListComparison;
 import ch.ice.file.ExcelParser;
+import ch.ice.file.ExcelWriter;
 
 public class Main {
 
@@ -14,7 +15,9 @@ public class Main {
 			
 			ArrayList<String> ListPos = ExcelParser.readPOSFile();
 						
-			ListComparison.compareLists(ListReg, ListPos);
+			ArrayList<String> SegmentedList = ListComparison.compareLists(ListReg, ListPos);
+			
+			ExcelWriter.writeXLSXFile(SegmentedList);
 			
 			
 	}
