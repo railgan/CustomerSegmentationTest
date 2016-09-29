@@ -2,6 +2,8 @@ package ch.ice.compare;
 
 import java.util.ArrayList;
 
+import ch.ice.model.Segment;
+
 public class ListComparison {
 
 	public static String posCompany;
@@ -10,14 +12,13 @@ public class ListComparison {
 	public static int othercompanies;
 	public static ArrayList<String> segmentedList = new ArrayList();
 	
-	public static ArrayList<String> compareLists(ArrayList<String> Register, ArrayList<String> POS){
+	public static ArrayList<String> compareLists(ArrayList<Segment> Register, ArrayList<String> POS){
 		for (int i = 0; i < POS.size(); i++) {
 			posCompany = (POS.get(i));
 			if(Register.contains(posCompany)){ 
 				//posSegment = "Medical"; 
 				segmentedList.add(i, "medical");
 				medical++;
-				
 			}
 			else{ 
 				//posSegment = "Other";
