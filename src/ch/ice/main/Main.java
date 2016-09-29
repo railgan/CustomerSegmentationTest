@@ -22,8 +22,8 @@ public class Main {
 			System.out.println("Time to Test if it worked:");
 			System.out.println(ListReg2.get(15).getCompanyName());
 			System.out.println(ListReg2.get(15).getCompanySegment());
-			//ArrayList<String> ListPos2 = Parser.readPOSFile();
-		//	ArrayList<String> SegmentedList2 = ListComparison.compareLists(ListReg2, ListPos2);
+			ArrayList<String> ListPos2 = Parser.readPOSFile();
+			ArrayList<String> SegmentedList2 = ListComparison.compareLists(ListReg2, ListPos2);
 			//ExcelWriter.writeXLSXFile(SegmentedList2);
 	}
 }
