@@ -128,20 +128,23 @@ public class ExcelParser {
 						switch (cell.getColumnIndex()) {
 						case 0:
 							this.companySegment = this.checkForCellType(cell);
+							
 							break;
 
 							// country Code
 						case 1:
-							this.companyNameRegister = this.checkForCellType(cell);
-													
+							this.companyNameRegister = this.checkForCellType(cell);			
 							break;
 
 						}
-						this.companiesRegister.add(this.createSegment());
+						
 						
 					}
+					
+					this.companiesRegister.add(this.createSegment());
+					
 				}	
-						
+				
 				System.out.println("Registry File read");
 		return companiesRegister;
 	}

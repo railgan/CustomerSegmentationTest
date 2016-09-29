@@ -19,6 +19,9 @@ public class Main {
 			
 			ExcelParser Parser = new ExcelParser();
 			ArrayList<Segment> ListReg2 = Parser.readRegisterFile();
+			System.out.println("Time to Test if it worked:");
+			System.out.println(ListReg2.get(6321).getCompanyName());
+			System.out.println(ListReg2.get(15).getCompanySegment());
 			//ArrayList<String> ListPos2 = Parser.readPOSFile();
 		//	ArrayList<String> SegmentedList2 = ListComparison.compareLists(ListReg2, ListPos2);
 			//ExcelWriter.writeXLSXFile(SegmentedList2);
