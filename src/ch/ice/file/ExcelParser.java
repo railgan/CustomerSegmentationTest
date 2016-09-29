@@ -30,7 +30,7 @@ public class ExcelParser {
 	private   boolean removeCapitalLetters = true;
 	
 	private String companyName;
-	private  String companySegment;
+	private String companySegment;
 	
 	private Segment createSegment(){
 		Segment segment = new Segment();
@@ -122,7 +122,7 @@ public class ExcelParser {
 					while (cells.hasNext())
 					{
 						cell=(XSSFCell) cells.next();
-						if (cell.getColumnIndex() >= 7)
+						if (cell.getColumnIndex() >= 2)
 							continue;
 						
 						switch (cell.getColumnIndex()) {
@@ -133,7 +133,8 @@ public class ExcelParser {
 
 							// country Code
 						case 1:
-							this.companyNameRegister = this.checkForCellType(cell);			
+							this.companyName = this.checkForCellType(cell);
+							
 							break;
 
 						}
