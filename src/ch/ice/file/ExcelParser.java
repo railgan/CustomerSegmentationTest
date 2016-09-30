@@ -7,25 +7,42 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import ch.ice.model.Segment;
 
 public class ExcelParser {
 
 	//Variables in which SCHURTER's List of Companies can be found
-	private static String companyNamePOS;
-	private static ArrayList<String> companiesPOS = new ArrayList();
+	private   String companyNamePOS;
+	private   ArrayList<String> companiesPOS = new ArrayList();
 	
 	// Variables in which the Corporate List of Companie Names can be Found
-	private static String companyNameRegister;
-	private static ArrayList<String> companiesRegister = new ArrayList();
+	private   String companyNameRegister;
 	
-	private static boolean removeSpecialCharacters = true;
-	private static boolean removeCapitalLetters = true;
+	private   Segment companyNameSegment;
+	private   ArrayList<Segment> companiesRegister = new ArrayList();
 	
-	public static ArrayList<String> readPOSFile() throws IOException
+	private   boolean removeSpecialCharacters = true;
+	private   boolean removeCapitalLetters = true;
+	
+	private String companyName;
+	private String companySegment;
+	
+	private Segment createSegment(){
+		Segment segment = new Segment();
+		
+		segment.setCompanyName(this.companyName);
+		segment.setCompanySegment(this.companySegment);
+		return segment;
+	
+	}
+	
+	
+	public   ArrayList<String> readPOSFile() throws IOException
 	{
 		
 		//Where the Test file has to be located
@@ -84,7 +101,7 @@ public class ExcelParser {
 	
 	
 	
-	public static ArrayList<String> readRegisterFile() throws IOException
+	public  ArrayList<Segment> readRegisterFile() throws IOException
 	{
 		//Where the Test file has to be located
 		InputStream ExcelFileToRead = new FileInputStream("C:/Javatest/Medical.xlsx");
@@ -105,39 +122,51 @@ public class ExcelParser {
 					while (cells.hasNext())
 					{
 						cell=(XSSFCell) cells.next();
-						if(cell.getColumnIndex()==0){
+						if (cell.getColumnIndex() >= 2)
+							continue;
+						
+						switch (cell.getColumnIndex()) {
+						case 0:
+							this.companySegment = this.checkForCellType(cell);
 							
-				
-						if (cell.getCellType() == XSSFCell.CELL_TYPE_STRING)
-						{
-							companyNameRegister = cell.getStringCellValue();
+
+							break;
+
+							// country Code
+						case 1:
+							this.companyName = this.checkForCellType(cell);
 							
-							//Removes Special Characters and Whitespaces & LowerCase
 							if(removeSpecialCharacters){
-							companyNameRegister = companyNameRegister.replaceAll("[\\W]","");
+								this.companyName = this.companyName.replaceAll("[\\W]","");
 							}
 							if(removeCapitalLetters){
-							companyNameRegister = companyNameRegister.toLowerCase();
+								this.companyName = this.companyName.toLowerCase();
 							}
-							
-							companiesRegister.add(companyNameRegister);
+							break;
+
 						}
-						else if(cell.getCellType() == XSSFCell.CELL_TYPE_NUMERIC)
-						{
-							System.out.print(cell.getNumericCellValue()+" ");
-						}
-						else
-						{
-							//U Can Handel Boolean, Formula, Errors
-						}
+						
+						
 					}
-				 
-				}
-				}
+					
+					this.companiesRegister.add(this.createSegment());
+					
+				}	
+				
 				System.out.println("Registry File read");
 		return companiesRegister;
 	}
 	
+	private String checkForCellType(Cell cell) {
+		
+		if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
+			return cell.getStringCellValue().toString();
+		}
+		else if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
+			return Double.toString(cell.getNumericCellValue());
+		}
+		return "";
+	}
 
 
 

@@ -23,7 +23,7 @@ public class ExcelWriter {
 		
 		String excelFileName = "C:/Javatest/Segmented.xlsx";
 		String oldExcelFile = "C:/Javatest/POS.xlsx";
-		
+		System.out.println(segmentCustomerList.size());
 		
 		
 		int cellnum;
