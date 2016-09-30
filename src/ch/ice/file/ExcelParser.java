@@ -129,12 +129,19 @@ public class ExcelParser {
 						case 0:
 							this.companySegment = this.checkForCellType(cell);
 							
+
 							break;
 
 							// country Code
 						case 1:
 							this.companyName = this.checkForCellType(cell);
 							
+							if(removeSpecialCharacters){
+								this.companyName = this.companyName.replaceAll("[\\W]","");
+							}
+							if(removeCapitalLetters){
+								this.companyName = this.companyName.toLowerCase();
+							}
 							break;
 
 						}
@@ -151,6 +158,7 @@ public class ExcelParser {
 	}
 	
 	private String checkForCellType(Cell cell) {
+		
 		if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
 			return cell.getStringCellValue().toString();
 		}
