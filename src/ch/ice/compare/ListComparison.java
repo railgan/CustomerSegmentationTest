@@ -18,18 +18,10 @@ public class ListComparison {
 	
 	public static ArrayList<String> compareLists(ArrayList<Segment> Register, ArrayList<String> POS){
 		regList = readCompanyName(Register);
-		System.out.println("Now we are in compareLists...");
-		System.out.println(regList.size());
-		System.out.println(Register.size());
-		System.out.println(POS.size());
-		System.out.println(segmentedList.size());
+		System.out.println("Now we are comparing Lists");
 		for (int i = 0; i < POS.size(); i++) {
 			posCompany = (POS.get(i));
-			
-			
 			if(regList.contains(posCompany)){
-
-
 				for (int k = 0; k<Register.size(); k++){
 					
 				if( posCompany.equals(Register.get(k).getCompanyName())){
@@ -39,12 +31,10 @@ public class ListComparison {
 				
 				} 
 			}
-				
 			}else{ 
 				
 				segmentedList.add(i, "other");
-				othercompanies++;
-				
+				othercompanies++;	
 			}
 		}
 	
@@ -73,4 +63,5 @@ public class ListComparison {
 			return regList;
 			
 }
+
 }

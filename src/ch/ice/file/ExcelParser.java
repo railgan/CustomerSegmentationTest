@@ -60,7 +60,7 @@ public class ExcelParser {
 		while (rows.hasNext())
 		{
 			row=(XSSFRow) rows.next();
-			if (row.getRowNum() == 0 || row.getRowNum() == 1)
+			if (row.getRowNum() == 0 || row.getRowNum() == 1 || row.getRowNum() == 3)
 				continue;
 			Iterator cells = row.cellIterator();
 			while (cells.hasNext())
