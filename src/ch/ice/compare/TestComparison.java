@@ -10,6 +10,7 @@ public class TestComparison {
 	public String posSegment;
 	public String regCompany;
 	public String companySegment;
+	public String companyName;
 	
 	public Segment regSegment;
 
@@ -29,6 +30,7 @@ public class TestComparison {
 	private LevenSteinModel createLevensteinSegment(){
 		LevenSteinModel levenSteinList = new LevenSteinModel();
 		
+		levenSteinList.setCompanyName(this.companyName);
 		levenSteinList.setLevenDistance(minStringDistance);
 		levenSteinList.setCompanySegment(this.companySegment);
 		return levenSteinList;
@@ -48,7 +50,7 @@ public class TestComparison {
 						indexOfBestResult = k;
 					}
 					if (k == Register.size()-1){
-					//	this.levenSteinList.setCompanyName(Register.get(indexOfBestResult).getCompanyName());
+						this.companyName =Register.get(indexOfBestResult).getCompanyName();
 						this.companySegment = Register.get(indexOfBestResult).getCompanySegment();
 						if (minStringDistance > 0.9){
 							medical++;

@@ -45,6 +45,8 @@ public class LevenSteinExcelWriter {
 		cell.setCellValue("Segment");
 		cell = sheet.getRow(row.getRowNum()).createCell(12);
 		cell.setCellValue("Distance");
+		cell= sheet.getRow(row.getRowNum()).createCell(13);
+		cell.setCellValue("Comparison Name");
 		
 		//iterating r number of rows
 		for (LevenSteinModel object : segmentCustomerList){
@@ -63,6 +65,8 @@ public class LevenSteinExcelWriter {
 			}
 				cell = sheet.getRow(row.getRowNum()).createCell(cellnum+1);
 				cell.setCellValue(levenDistance);
+				cell = sheet.getRow(row.getRowNum()).createCell(cellnum+2);
+				cell.setCellValue(object.getCompanyName());
 				
 			
 		}
@@ -79,7 +83,7 @@ public class LevenSteinExcelWriter {
 
 		//write this workbook to an Outputstream.
 		wb.write(fileOut);
-	;
+	
 		fileOut.flush();
 		fileOut.close();
 		
