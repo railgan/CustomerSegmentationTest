@@ -67,7 +67,7 @@ public class TestComparison {
 						this.companyName =Register.get(indexOfBestResult).getCompanyName();
 						this.companySegment = Register.get(indexOfBestResult).getCompanySegment();
 						this.unprocessedCompanyName = Register.get(indexOfBestResult).getUnprocessedCompanyName();
-						if (minStringDistance < 0.1){
+						if (minStringDistance <= 0.01){
 							medical++;
 						}
 						segmentedList.add(i,this.createLevensteinSegment());

@@ -4,7 +4,10 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -15,11 +18,17 @@ import ch.ice.model.LevenSteinModel;
 
 public class LevenSteinExcelWriter {
 
+	DateFormat dateFormat = new SimpleDateFormat("yyyy_MM_dd_HH");
+	 
+	Date date = new Date();
+	
+	
 	public void writeXLSXFile(ArrayList<LevenSteinModel> segmentCustomerList) throws IOException {
 		
-		String excelFileName = "C:/Javatest/Segmented.xlsx";
+		
+		
+		String excelFileName = "C:/Javatest/Segmented"+dateFormat.format(date)+".xlsx";
 		String oldExcelFile = "C:/Javatest/POS.xlsx";
-		System.out.println(segmentCustomerList.size());
 		
 		
 		int cellnum;
@@ -48,17 +57,18 @@ public class LevenSteinExcelWriter {
 		cell= sheet.getRow(row.getRowNum()).createCell(13);
 		cell.setCellValue("Comparison Name");
 		
+		
 		//iterating r number of rows
 		for (LevenSteinModel object : segmentCustomerList){
 			///CODE
-			segmentMargain = 0.1;
+			segmentMargain = 0.01;
 			levenDistance = object.getLevenDistance();
 			
 			
 			row = sheet.getRow(rownum++);
 			cell = sheet.getRow(row.getRowNum()).createCell(cellnum);
 			
-			if(object.getLevenDistance()>=segmentMargain){
+			if(object.getLevenDistance()<=segmentMargain){
 				cell.setCellValue(object.getCompanySegment());
 			} else {
 				cell.setCellValue("other");
