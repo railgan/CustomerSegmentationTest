@@ -20,7 +20,7 @@ public class TestComparison {
 	public int medical;
 	public int othercompanies;
 	public double stringDistance;
-	public double minStringDistance;
+	public double minStringDistance = 1;
 	public int indexOfBestResult;
 	
 	public ArrayList<LevenSteinModel> segmentedList = new ArrayList<LevenSteinModel>();
@@ -71,9 +71,7 @@ public class TestComparison {
 							medical++;
 						}
 						segmentedList.add(i,this.createLevensteinSegment());
-						minStringDistance = 0;
-						indexOfBestResult = 0;
-						stringDistance = 0;
+						minStringDistance = 1;
 					}
 				
 				}		
