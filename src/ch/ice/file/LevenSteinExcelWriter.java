@@ -51,7 +51,7 @@ public class LevenSteinExcelWriter {
 		//iterating r number of rows
 		for (LevenSteinModel object : segmentCustomerList){
 			///CODE
-			segmentMargain = 0.9;
+			segmentMargain = 0.1;
 			levenDistance = object.getLevenDistance();
 			
 			
