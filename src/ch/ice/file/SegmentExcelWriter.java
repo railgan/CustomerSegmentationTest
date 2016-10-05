@@ -14,16 +14,17 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import ch.ice.model.LevenSteinModel;
 
-public class LevenSteinExcelWriter {
+import ch.ice.model.Segment;
+
+public class SegmentExcelWriter {
 
 	DateFormat dateFormat = new SimpleDateFormat("yyyy_MM_dd_HH");
 	 
 	Date date = new Date();
 	
 	
-	public void writeXLSXFile(ArrayList<LevenSteinModel> segmentCustomerList) throws IOException {
+	public void writeXLSXFile(ArrayList<Segment> segmentCustomerList) throws IOException {
 		
 		
 		
@@ -33,12 +34,11 @@ public class LevenSteinExcelWriter {
 		
 		int cellnum;
 		int rownum;
-		double segmentMargain;
+		double segmentMargain = 0.01;
 		double levenDistance;
 		
 		
-		//Copy the existing file
-		//copyFile( source, destination);
+		
 		
 		InputStream inp = new FileInputStream(oldExcelFile);
 		XSSFWorkbook wb = new XSSFWorkbook(inp);
@@ -59,9 +59,9 @@ public class LevenSteinExcelWriter {
 		
 		
 		//iterating r number of rows
-		for (LevenSteinModel object : segmentCustomerList){
-			///CODE
-			segmentMargain = 0.01;
+		for (Segment object : segmentCustomerList){
+			
+			
 			levenDistance = object.getLevenDistance();
 			
 			
@@ -76,7 +76,7 @@ public class LevenSteinExcelWriter {
 				cell = sheet.getRow(row.getRowNum()).createCell(cellnum+1);
 				cell.setCellValue(levenDistance);
 				cell = sheet.getRow(row.getRowNum()).createCell(cellnum+2);
-				cell.setCellValue(object.getunprocessedCompanyName());
+				cell.setCellValue(object.getUnprocessedCompanyName());
 				
 			
 		}

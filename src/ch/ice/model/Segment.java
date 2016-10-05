@@ -1,16 +1,13 @@
 package ch.ice.model;
 
-/**
- * @author Mike
- *
- */
 public class Segment {
-	
-	
-	
-	public String companySegment;
-	public String companyName;
+
+	public  String companySegment;
+	public  String companyName;
 	public String unprocessedCompanyName;
+	public  double levenDistance;
+	
+	
 	
 	public String getCompanyName() {
 		return companyName;
@@ -24,10 +21,16 @@ public class Segment {
 	public void setCompanySegment(String companySegment) {
 		this.companySegment = companySegment;
 	}
-	public String getUnprocessedCompanyName() {
-		return unprocessedCompanyName;
+	public double getLevenDistance() {
+		return levenDistance;
+	}
+	public void setLevenDistance(double levenDistance) {
+		this.levenDistance = levenDistance;
 	}
 	public void setUnprocessedCompanyName(String unprocessedCompanyName) {
 		this.unprocessedCompanyName = unprocessedCompanyName;
+	}
+	public String getUnprocessedCompanyName() {
+		return unprocessedCompanyName;
 	}
 }

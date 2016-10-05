@@ -2,45 +2,75 @@ package ch.ice.compare;
 
 import java.util.ArrayList;
 
+import ch.ice.file.SegmentExcelParser;
 import ch.ice.model.Segment;
 
 public class ListComparison {
+	public String posCompany;
+	public String posSegment;
+	public String regCompany;
+	public String companySegment;
+	public String companyName;
+	public String unprocessedCompanyName;
+	
+	public Segment regSegment;
 
-	public static String posCompany;
-	public static String posSegment;
-	public static String regCompany;
-	public static Segment regSegment;
-	public static int medical;
-	public static int othercompanies;
-	public static ArrayList<String> segmentedList = new ArrayList<String>();
-	public static ArrayList<String> regList = new ArrayList<String>();
 	
+	public int medical;
+	public int othercompanies;
+	public double stringDistance;
+	public double minStringDistance = 1;
+	public int indexOfBestResult;
 	
-	public static ArrayList<String> compareLists(ArrayList<Segment> Register, ArrayList<String> POS){
+	public ArrayList<Segment> segmentedList = new ArrayList<Segment>();
+	public ArrayList<String> regList = new ArrayList<String>();
+	
+	public SegmentExcelParser Parser = new SegmentExcelParser();
+	
+	public JaroWinkler jaroWinkelr = new JaroWinkler();
+	public Segment singleSegment = new Segment();
+	
+	private Segment createLevensteinSegment(){
+		Segment singleSegment = new Segment();
+		
+		singleSegment.setCompanyName(this.companyName);
+		singleSegment.setLevenDistance(minStringDistance);
+		singleSegment.setCompanySegment(this.companySegment);
+		singleSegment.setUnprocessedCompanyName(this.unprocessedCompanyName);
+		return singleSegment;
+	
+	}
+	
+	public   ArrayList<Segment> compareLists(ArrayList<Segment> Register, ArrayList<String> POS){
 		regList = readCompanyName(Register);
-		System.out.println("Now we are comparing Lists");
-		for (int i = 0; i < POS.size(); i++) {
-			posCompany = (POS.get(i));
-			if(regList.contains(posCompany)){
-				for (int k = 0; k<Register.size(); k++){
-					
-				if( posCompany.equals(Register.get(k).getCompanyName())){
-				segmentedList.add(i, Register.get(k).getCompanySegment());
-				medical++;
-				break;
-				
-				} 
-			}
-			}else{ 
-				
-				segmentedList.add(i, "other");
-				othercompanies++;	
-			}
-		}
 	
 		
+		System.out.println("Now we are comparing Lists");
+		for (int i = 0; i < POS.size(); i++) {
 			
-			
+			posCompany = (POS.get(i));
+				for (int k = 0; k<Register.size(); k++){
+					
+					stringDistance = jaroWinkelr.distance(posCompany, Register.get(k).getCompanyName());
+					if(stringDistance < minStringDistance){
+						minStringDistance = stringDistance;
+						indexOfBestResult = k;
+					}
+					if (k == Register.size()-1){
+						this.companyName =Register.get(indexOfBestResult).getCompanyName();
+						this.companySegment = Register.get(indexOfBestResult).getCompanySegment();
+						this.unprocessedCompanyName = Register.get(indexOfBestResult).getUnprocessedCompanyName();
+						if (minStringDistance <= 0.01){
+							medical++;
+						}
+						segmentedList.add(i,this.createLevensteinSegment());
+						minStringDistance = 1;
+					}
+				
+				}		
+		
+		}
+	
 		System.out.println(
 				"Amount Medical: " + medical + 
 				";\nAmount Other: " + othercompanies +
@@ -48,20 +78,20 @@ public class ListComparison {
 				";\nTotal Amount of Companies: " + POS.size() +
 				";\nSegmented List size: " +segmentedList.size()
 				);
+	
+		
 		return segmentedList;
 	}
-		public static ArrayList<String> readCompanyName(ArrayList<Segment> Register){
+		public   ArrayList<String> readCompanyName(ArrayList<Segment> Register){
 			for (int j = 0; j < Register.size(); j++) {
 				regCompany = (Register.get(j).getCompanyName());
 				regList.add(j, regCompany);
 				
-				
-				
 			}
 			System.out.println("CompanyNamesRead");
-			System.out.println(regList.get(2));
+			
 			return regList;
 			
 }
-
 }
+
