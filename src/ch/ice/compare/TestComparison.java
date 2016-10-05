@@ -29,6 +29,7 @@ public class TestComparison {
 	public ExcelParser Parser = new ExcelParser();
 	
 	public LevenStein levenStein = new LevenStein();
+	public JaroWinkler jaroWinkelr = new JaroWinkler();
 	public LevenSteinModel levenSteinList = new LevenSteinModel();
 	
 	private LevenSteinModel createLevensteinSegment(){
@@ -48,11 +49,17 @@ public class TestComparison {
 		
 		System.out.println("Now we are comparing Lists");
 		for (int i = 0; i < POS.size(); i++) {
+			if(i == 1000) {
+				System.out.println("We are at: 1000");
+			}
+			if(i == 10000) {
+				System.out.println("We are at: 10000");
+			}
 			posCompany = (POS.get(i));
 				for (int k = 0; k<Register.size(); k++){
-					stringDistance = levenStein.similarity(posCompany, Register.get(k).getCompanyName());
-					
-					if(stringDistance > minStringDistance){
+					//stringDistance = levenStein.similarity(posCompany, Register.get(k).getCompanyName());
+					stringDistance = jaroWinkelr.distance(posCompany, Register.get(k).getCompanyName());
+					if(stringDistance < minStringDistance){
 						minStringDistance = stringDistance;
 						indexOfBestResult = k;
 					}
@@ -60,7 +67,7 @@ public class TestComparison {
 						this.companyName =Register.get(indexOfBestResult).getCompanyName();
 						this.companySegment = Register.get(indexOfBestResult).getCompanySegment();
 						this.unprocessedCompanyName = Register.get(indexOfBestResult).getUnprocessedCompanyName();
-						if (minStringDistance > 0.9){
+						if (minStringDistance < 0.1){
 							medical++;
 						}
 						segmentedList.add(i,this.createLevensteinSegment());
