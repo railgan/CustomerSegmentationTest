@@ -31,10 +31,11 @@ public class ExcelParser {
 	
 	private String companyName;
 	private String companySegment;
+	private String unprocessedCompanyName;
 	
 	private Segment createSegment(){
 		Segment segment = new Segment();
-		
+		segment.setUnprocessedCompanyName(this.unprocessedCompanyName);
 		segment.setCompanyName(this.companyName);
 		segment.setCompanySegment(this.companySegment);
 		return segment;
@@ -135,7 +136,7 @@ public class ExcelParser {
 							// country Code
 						case 1:
 							this.companyName = this.checkForCellType(cell);
-							
+							this.unprocessedCompanyName = this.companyName;
 							if(removeSpecialCharacters){
 								this.companyName = this.companyName.replaceAll("[\\W]","");
 							}

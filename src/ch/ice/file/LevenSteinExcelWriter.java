@@ -66,7 +66,7 @@ public class LevenSteinExcelWriter {
 				cell = sheet.getRow(row.getRowNum()).createCell(cellnum+1);
 				cell.setCellValue(levenDistance);
 				cell = sheet.getRow(row.getRowNum()).createCell(cellnum+2);
-				cell.setCellValue(object.getCompanyName());
+				cell.setCellValue(object.getunprocessedCompanyName());
 				
 			
 		}

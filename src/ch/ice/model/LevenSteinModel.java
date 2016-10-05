@@ -1,10 +1,12 @@
 package ch.ice.model;
 
 public class LevenSteinModel {
-	public  String setCompanyName;
+
 	public  String companySegment;
 	public  String companyName;
+	public String unprocessedCompanyName;
 	public  double levenDistance;
+	
 	
 	
 	public String getCompanyName() {
@@ -24,5 +26,11 @@ public class LevenSteinModel {
 	}
 	public void setLevenDistance(double levenDistance) {
 		this.levenDistance = levenDistance;
+	}
+	public void setUnprocessedCompanyName(String unprocessedCompanyName) {
+		this.unprocessedCompanyName = unprocessedCompanyName;
+	}
+	public String getunprocessedCompanyName() {
+		return unprocessedCompanyName;
 	}
 }

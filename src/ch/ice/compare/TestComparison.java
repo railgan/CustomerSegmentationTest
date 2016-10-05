@@ -2,6 +2,7 @@ package ch.ice.compare;
 
 import java.util.ArrayList;
 
+import ch.ice.file.ExcelParser;
 import ch.ice.model.LevenSteinModel;
 import ch.ice.model.Segment;
 
@@ -11,6 +12,7 @@ public class TestComparison {
 	public String regCompany;
 	public String companySegment;
 	public String companyName;
+	public String unprocessedCompanyName;
 	
 	public Segment regSegment;
 
@@ -24,6 +26,8 @@ public class TestComparison {
 	public ArrayList<LevenSteinModel> segmentedList = new ArrayList<LevenSteinModel>();
 	public ArrayList<String> regList = new ArrayList<String>();
 	
+	public ExcelParser Parser = new ExcelParser();
+	
 	public LevenStein levenStein = new LevenStein();
 	public LevenSteinModel levenSteinList = new LevenSteinModel();
 	
@@ -33,12 +37,15 @@ public class TestComparison {
 		levenSteinList.setCompanyName(this.companyName);
 		levenSteinList.setLevenDistance(minStringDistance);
 		levenSteinList.setCompanySegment(this.companySegment);
+		levenSteinList.setUnprocessedCompanyName(this.unprocessedCompanyName);
 		return levenSteinList;
 	
 	}
 	
 	public   ArrayList<LevenSteinModel> compareLists(ArrayList<Segment> Register, ArrayList<String> POS){
 		regList = readCompanyName(Register);
+	
+		
 		System.out.println("Now we are comparing Lists");
 		for (int i = 0; i < POS.size(); i++) {
 			posCompany = (POS.get(i));
@@ -52,6 +59,7 @@ public class TestComparison {
 					if (k == Register.size()-1){
 						this.companyName =Register.get(indexOfBestResult).getCompanyName();
 						this.companySegment = Register.get(indexOfBestResult).getCompanySegment();
+						this.unprocessedCompanyName = Register.get(indexOfBestResult).getUnprocessedCompanyName();
 						if (minStringDistance > 0.9){
 							medical++;
 						}
