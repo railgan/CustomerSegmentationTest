@@ -11,13 +11,15 @@ import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import ch.ice.model.Customer;
 import ch.ice.model.Segment;
 
 public class SegmentExcelParser {
 
 	//Variables in which SCHURTER's List of Companies can be found
 	private   String companyNamePOS;
-	private   ArrayList<String> companiesPOS = new ArrayList<String>();
+	private   ArrayList<Customer> companiesPOS = new ArrayList<Customer>();
 	
 	private   ArrayList<Segment> companiesRegister = new ArrayList<Segment>();
 	
@@ -27,6 +29,7 @@ public class SegmentExcelParser {
 	private String companyName;
 	private String companySegment;
 	private String unprocessedCompanyName;
+	private String companyID;
 	
 	private Segment createSegment(){
 		Segment segment = new Segment();
@@ -36,9 +39,16 @@ public class SegmentExcelParser {
 		return segment;
 	
 	}
+	private Customer createCustomer(){
+		Customer customer = new Customer();
+		customer.setFullName(this.companyNamePOS);
+		customer.setId(this.companyID);
+		customer.setUnproceesedFullName(this.unprocessedCompanyName);
+		return customer;
+	}
 	
 	
-	public   ArrayList<String> readPOSFile() throws IOException
+	public   ArrayList<Customer> readPOSFile() throws IOException
 	{
 		
 		//Where the Test file has to be located
@@ -50,7 +60,9 @@ public class SegmentExcelParser {
 		XSSFSheet sheet = wb.getSheetAt(0);
 		XSSFRow row; 
 		XSSFCell cell;
-
+		
+		
+		
 		Iterator rows = sheet.rowIterator();
 
 		while (rows.hasNext())
@@ -62,21 +74,24 @@ public class SegmentExcelParser {
 			while (cells.hasNext())
 			{
 				cell=(XSSFCell) cells.next();
-				if(cell.getColumnIndex()==6){
-		
+				switch (cell.getColumnIndex()) {
+				case 0: this.companyID = cell.getStringCellValue();
+						break;
+				case 6: 
+
 				if (cell.getCellType() == XSSFCell.CELL_TYPE_STRING)
 				{
-					companyNamePOS = cell.getStringCellValue();
-					
+					this.companyNamePOS = cell.getStringCellValue();
+					this.unprocessedCompanyName = this.companyNamePOS;
 					
 					//Removes Special Characters and Whitespaces & LowerCase
 					if(removeSpecialCharacters){
-						companyNamePOS = companyNamePOS.replaceAll("[\\W]","");
+						this.companyNamePOS = this.companyNamePOS.replaceAll("[\\W]","");
 					}
 					if(removeCapitalLetters){
-					companyNamePOS = companyNamePOS.toLowerCase();
+						this.companyNamePOS = this.companyNamePOS.toLowerCase();
 					}
-					companiesPOS.add(companyNamePOS);
+					this.companiesPOS.add(this.createCustomer());
 				}
 				else if(cell.getCellType() == XSSFCell.CELL_TYPE_NUMERIC)
 				{
@@ -86,10 +101,11 @@ public class SegmentExcelParser {
 				{
 					//U Can Handel Boolean, Formula, Errors
 				}
+				break;
 			}
-		 
+			}
 		}
-		}
+
 		System.out.println("POS File Read");
 		return companiesPOS;
 		

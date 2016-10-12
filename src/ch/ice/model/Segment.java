@@ -9,6 +9,7 @@ public class Segment {
 	
 	
 	
+	
 	public String getCompanyName() {
 		return companyName;
 	}

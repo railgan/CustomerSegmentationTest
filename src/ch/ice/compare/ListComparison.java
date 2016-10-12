@@ -3,6 +3,7 @@ package ch.ice.compare;
 import java.util.ArrayList;
 
 import ch.ice.file.SegmentExcelParser;
+import ch.ice.model.Customer;
 import ch.ice.model.Segment;
 
 public class ListComparison {
@@ -15,7 +16,7 @@ public class ListComparison {
 	
 	public Segment regSegment;
 
-	
+	public int dublicates;
 	public int medical;
 	public int othercompanies;
 	public double stringDistance;
@@ -41,14 +42,13 @@ public class ListComparison {
 	
 	}
 	
-	public   ArrayList<Segment> compareLists(ArrayList<Segment> Register, ArrayList<String> POS){
+	public   ArrayList<Segment> compareLists(ArrayList<Segment> Register, ArrayList<Customer> listPos2){
 		regList = readCompanyName(Register);
-	
-		
-		System.out.println("Now we are comparing Lists");
-		for (int i = 0; i < POS.size(); i++) {
 			
-			posCompany = (POS.get(i));
+		System.out.println("Now we are comparing Lists");
+		for (int i = 0; i < listPos2.size(); i++) {
+			
+			posCompany = (listPos2.get(i).getFullName());
 				for (int k = 0; k<Register.size(); k++){
 					
 					stringDistance = jaroWinkelr.distance(posCompany, Register.get(k).getCompanyName());
@@ -75,7 +75,7 @@ public class ListComparison {
 				"Amount Medical: " + medical + 
 				";\nAmount Other: " + othercompanies +
 				";\nRegister Size: " + Register.size() +
-				";\nTotal Amount of Companies: " + POS.size() +
+				";\nTotal Amount of Companies: " + listPos2.size() +
 				";\nSegmented List size: " +segmentedList.size()
 				);
 	
@@ -88,10 +88,29 @@ public class ListComparison {
 				regList.add(j, regCompany);
 				
 			}
+		
+			
 			System.out.println("CompanyNamesRead");
 			
 			return regList;
+	
+		}
+			public void deDuplicate(ArrayList<Customer> customers){
+				int d = 1;
+				for(int c = 0; c < customers.size()-1; c=d){
+					d = c+1;
+					while( customers.get(c).getId().equals(customers.get(d).getId())){
+						customers.get(c).setUnproceesedFullName(customers.get(c).getUnproceesedFullName() +", " + customers.get(d).getUnproceesedFullName());
+						d++;
+						System.out.println(customers.get(c).getUnproceesedFullName());
+						dublicates++;
+						
+						}
+				}
+			System.out.println("Dublicate count: " +dublicates);
+			}
+			
 			
 }
-}
+
 
