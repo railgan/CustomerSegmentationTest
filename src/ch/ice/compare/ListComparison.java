@@ -17,6 +17,7 @@ public class ListComparison {
 	public Segment regSegment;
 
 	public int dublicates;
+	public int dublicates2;
 	public int medical;
 	public int othercompanies;
 	public double stringDistance;
@@ -95,21 +96,30 @@ public class ListComparison {
 			return regList;
 	
 		}
-			public void deDuplicate(ArrayList<Customer> customers){
+			public void deDuplicate(ArrayList<Customer> customers, ArrayList<Segment> segmentedCustomers){
 				int d = 1;
 				for(int c = 0; c < customers.size()-1; c=d){
 					d = c+1;
 					while( customers.get(c).getId().equals(customers.get(d).getId())){
-						customers.get(c).setUnproceesedFullName(customers.get(c).getUnproceesedFullName() +", " + customers.get(d).getUnproceesedFullName());
-						d++;
-						System.out.println(customers.get(c).getUnproceesedFullName());
-						dublicates++;
+						if(segmentedCustomers.get(c).getLevenDistance()<segmentedCustomers.get(d).getLevenDistance()){
+							customers.get(c).setUnproceesedFullName(customers.get(c).getUnproceesedFullName() +", " + customers.get(d).getUnproceesedFullName());
+							d++;
+							System.out.println(customers.get(c).getUnproceesedFullName());
+							dublicates++;
+						} else {
+							
+							customers.get(d).setUnproceesedFullName(customers.get(d).getUnproceesedFullName() +", " + customers.get(c).getUnproceesedFullName());
+							dublicates2++;
+							System.out.println("Special Case: "+customers.get(d).getUnproceesedFullName());
 						
+						break;
 						}
+							
 				}
-			System.out.println("Dublicate count: " +dublicates);
-			}
+				}
+			System.out.println("Dublicate count: " +dublicates + "\n Special Case count: "+ dublicates2);
 			
+			}
 			
 }
 

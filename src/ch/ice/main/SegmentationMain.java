@@ -20,9 +20,8 @@ public class SegmentationMain {
 			ArrayList<Segment> ListReg2 = Parser.readRegisterFile();
 			ListComparison Comparer = new ListComparison();
 			SegmentExcelWriter Writer = new SegmentExcelWriter();
-			Comparer.deDuplicate(ListPos2);
 			ArrayList<Segment> ListSegmented= Comparer.compareLists(ListReg2, ListPos2);
-			
+			Comparer.deDuplicate(ListPos2, ListSegmented);
 			System.out.println("Time to Segment");
 		
 			Writer.writeXLSXFile(ListSegmented);
