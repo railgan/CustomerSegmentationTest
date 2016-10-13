@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -29,17 +30,14 @@ public class SegmentExcelWriter {
 		
 		
 		String excelFileName = "C:/Javatest/Segmented"+dateFormat.format(date)+".xlsx";
-		String oldExcelFile = "C:/Javatest/POS.xlsx";
-		
+	//	String oldExcelFile = "C:/Javatest/POS.xlsx";
+		String oldExcelFile = "C:/Javatest/SPOSDES_Test.xlsx";
 		
 		int cellnum;
 		int rownum;
 		double segmentMargain = 0.01;
 		double levenDistance;
-		
-		
-		
-		
+						
 		InputStream inp = new FileInputStream(oldExcelFile);
 		XSSFWorkbook wb = new XSSFWorkbook(inp);
 		System.out.println("ExcelFileRead");
@@ -60,14 +58,17 @@ public class SegmentExcelWriter {
 		
 		//iterating r number of rows
 		for (Segment object : segmentCustomerList){
-			
-			
+				
 			levenDistance = object.getLevenDistance();
 			
 			
 			row = sheet.getRow(rownum++);
+			if(isRowEmpty(row)){
+				continue;
+			}
 			cell = sheet.getRow(row.getRowNum()).createCell(cellnum);
 			
+			if(object.isExists()){
 			if(object.getLevenDistance()<=segmentMargain){
 				cell.setCellValue(object.getCompanySegment());
 			} else {
@@ -77,9 +78,15 @@ public class SegmentExcelWriter {
 				cell.setCellValue(levenDistance);
 				cell = sheet.getRow(row.getRowNum()).createCell(cellnum+2);
 				cell.setCellValue(object.getUnprocessedCompanyName());
-				
-			
-		}
+			} else { 
+				cell.setCellValue("NAN");
+				cell = sheet.getRow(row.getRowNum()).createCell(cellnum+1);
+				cell.setCellValue("NAN");
+				cell = sheet.getRow(row.getRowNum()).createCell(cellnum+2);
+				cell.setCellValue("no company name provided");
+			}
+			}
+		
 		for (int i = 0; i < 20; i++)
 			sheet.autoSizeColumn(i);
 		sheet.setColumnWidth(6, 2000);
@@ -98,5 +105,17 @@ public class SegmentExcelWriter {
 		fileOut.close();
 		
 	}
-	
+
+	public static boolean isRowEmpty(XSSFRow row) {
+		
+		if (row==null){
+			return true;
+		}
+	    for (int c = row.getFirstCellNum(); c < row.getLastCellNum(); c++) {
+	        Cell cell = row.getCell(c);
+	        if (cell != null && cell.getCellType() != Cell.CELL_TYPE_BLANK)
+	            return false;
+	    }
+	    return true;
+	}
 }

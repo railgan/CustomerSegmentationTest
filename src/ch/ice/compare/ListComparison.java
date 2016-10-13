@@ -23,6 +23,7 @@ public class ListComparison {
 	public double stringDistance;
 	public double minStringDistance = 1;
 	public int indexOfBestResult;
+	public boolean exists;
 	
 	public ArrayList<Segment> segmentedList = new ArrayList<Segment>();
 	public ArrayList<String> regList = new ArrayList<String>();
@@ -34,11 +35,11 @@ public class ListComparison {
 	
 	private Segment createLevensteinSegment(){
 		Segment singleSegment = new Segment();
-		
 		singleSegment.setCompanyName(this.companyName);
 		singleSegment.setLevenDistance(minStringDistance);
 		singleSegment.setCompanySegment(this.companySegment);
 		singleSegment.setUnprocessedCompanyName(this.unprocessedCompanyName);
+		singleSegment.setExists(exists);
 		return singleSegment;
 	
 	}
@@ -50,6 +51,13 @@ public class ListComparison {
 		for (int i = 0; i < listPos2.size(); i++) {
 			
 			posCompany = (listPos2.get(i).getFullName());
+			exists = listPos2.get(i).isExists();
+			if(exists == false) {
+				this.companyName = posCompany;
+				this.companySegment = "None";
+				this.unprocessedCompanyName = listPos2.get(i).getUnproceesedFullName();
+				segmentedList.add(i,this.createLevensteinSegment());
+			}
 				for (int k = 0; k<Register.size(); k++){
 					
 					stringDistance = jaroWinkelr.distance(posCompany, Register.get(k).getCompanyName());
@@ -61,6 +69,8 @@ public class ListComparison {
 						this.companyName =Register.get(indexOfBestResult).getCompanyName();
 						this.companySegment = Register.get(indexOfBestResult).getCompanySegment();
 						this.unprocessedCompanyName = Register.get(indexOfBestResult).getUnprocessedCompanyName();
+						
+						
 						if (minStringDistance <= 0.01){
 							medical++;
 						}
@@ -99,6 +109,9 @@ public class ListComparison {
 			public void deDuplicate(ArrayList<Customer> customers, ArrayList<Segment> segmentedCustomers){
 				int d = 1;
 				for(int c = 0; c < customers.size()-1; c=d){
+					if (customers.get(c).isExists()==false) {
+						break;
+					}
 					d = c+1;
 					while( customers.get(c).getId().equals(customers.get(d).getId())){
 						if(segmentedCustomers.get(c).getLevenDistance()<segmentedCustomers.get(d).getLevenDistance()){

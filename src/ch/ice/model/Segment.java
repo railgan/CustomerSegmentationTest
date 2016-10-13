@@ -6,7 +6,16 @@ public class Segment {
 	public  String companyName;
 	public String unprocessedCompanyName;
 	public  double levenDistance;
+	private boolean exists;
 	
+	
+	public boolean isExists() {
+		return exists;
+	}
+
+	public void setExists(boolean exists) {
+		this.exists = exists;
+	}
 	
 	
 	

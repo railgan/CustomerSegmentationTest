@@ -9,7 +9,17 @@ public class Customer {
 	private String id;
 	private String fullName;
 	private String unproceesedFullName;
+	private boolean exists;
 	
+	
+	public boolean isExists() {
+		return exists;
+	}
+
+	public void setExists(boolean exists) {
+		this.exists = exists;
+	}
+
 	public String getId() {
 		return id;
 	}
