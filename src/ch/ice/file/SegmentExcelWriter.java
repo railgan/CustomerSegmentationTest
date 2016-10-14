@@ -58,6 +58,11 @@ public class SegmentExcelWriter {
 
 			row = sheet.getRow(rownum++);
 			if (isRowEmpty(row)) {
+				int lastRowNum=sheet.getLastRowNum();
+				if(rownum<lastRowNum){
+				sheet.shiftRows(rownum, lastRowNum, -1);
+				rownum--;
+				}
 				continue;
 			}
 			cell = sheet.getRow(row.getRowNum()).createCell(cellnum);
@@ -71,7 +76,13 @@ public class SegmentExcelWriter {
 				}
 				
 				if (object.isDublicate()){
+					int lastRowNum=sheet.getLastRowNum();
+					System.out.println(lastRowNum);
+					System.out.println(lastRowNum-rownum);
+					System.out.println(rownum);
 					sheet.removeRow(row);
+					sheet.shiftRows(rownum, lastRowNum, -1);
+					rownum--;
 					continue;
 				}
 				if (object.isNewCompanyName()){
