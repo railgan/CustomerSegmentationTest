@@ -2,11 +2,14 @@ package ch.ice.model;
 
 public class Segment {
 
-	public  String companySegment;
-	public  String companyName;
-	public String unprocessedCompanyName;
-	public  double levenDistance;
+	private String id;
+	private  String companySegment;
+	private  String companyName;
+	private String unprocessedCompanyName;
+	private  double levenDistance;
 	private boolean exists;
+	private boolean dublicate;
+	private boolean newCompanyName;
 	
 	
 	public boolean isExists() {
@@ -42,5 +45,29 @@ public class Segment {
 	}
 	public String getUnprocessedCompanyName() {
 		return unprocessedCompanyName;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public boolean isNewCompanyName() {
+		return newCompanyName;
+	}
+
+	public void setNewCompanyName(boolean newCompanyName) {
+		this.newCompanyName = newCompanyName;
+	}
+
+	public boolean isDublicate() {
+		return dublicate;
+	}
+
+	public void setDublicate(boolean dublicate) {
+		this.dublicate = dublicate;
 	}
 }

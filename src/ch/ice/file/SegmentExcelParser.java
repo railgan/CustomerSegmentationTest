@@ -13,7 +13,6 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import ch.ice.model.Customer;
 import ch.ice.model.Segment;
 
 public class SegmentExcelParser {
@@ -29,7 +28,7 @@ public class SegmentExcelParser {
 	// Variables in which SCHURTER's List of Companies can be found
 	private String companyNamePOS;
 
-	private ArrayList<Customer> companiesPOS = new ArrayList<Customer>();
+	private ArrayList<Segment> companiesPOS = new ArrayList<Segment>();
 
 	private ArrayList<Segment> companiesRegister = new ArrayList<Segment>();
 	private boolean removeSpecialCharacters = true;
@@ -52,12 +51,12 @@ public class SegmentExcelParser {
 		return "";
 	}
 
-	private Customer createCustomer() {
-		Customer customer = new Customer();
+	private Segment createCustomer() {
+		Segment customer = new Segment();
 		customer.setExists(exists);
-		customer.setFullName(this.companyNamePOS);
+		customer.setCompanyName(this.companyNamePOS);
 		customer.setId(this.companyID);
-		customer.setUnproceesedFullName(this.unprocessedCompanyName);
+		customer.setUnprocessedCompanyName(this.unprocessedCompanyName);
 		return customer;
 
 	}
@@ -71,7 +70,7 @@ public class SegmentExcelParser {
 
 	}
 
-	public ArrayList<Customer> readPOSFile() throws IOException {
+	public ArrayList<Segment> readPOSFile() throws IOException {
 
 		// Where the Test file has to be located
 		// InputStream ExcelFileToRead = new
@@ -100,7 +99,6 @@ public class SegmentExcelParser {
 				if (rowIndex == lastRowNum) {
 					break;
 				}
-
 				continue;
 			}
 			if (row.getRowNum() == 0 || row.getRowNum() == 1 || row.getRowNum() == 2)

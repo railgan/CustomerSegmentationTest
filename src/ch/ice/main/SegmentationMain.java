@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import ch.ice.compare.ListComparison;
 import ch.ice.file.SegmentExcelParser;
 import ch.ice.file.SegmentExcelWriter;
-import ch.ice.model.Customer;
 import ch.ice.model.Segment;
 
 public class SegmentationMain {
@@ -16,18 +15,18 @@ public class SegmentationMain {
 			
 			SegmentExcelParser Parser = new SegmentExcelParser();
 					
-			ArrayList<Customer> ListPos2 = Parser.readPOSFile();
-			ArrayList<Segment> ListReg2 = Parser.readRegisterFile();
+			ArrayList<Segment> listPOS = Parser.readPOSFile();
+			ArrayList<Segment> listReg = Parser.readRegisterFile();
+			
+			
 			ListComparison Comparer = new ListComparison();
 			SegmentExcelWriter Writer = new SegmentExcelWriter();
-			ArrayList<Segment> ListSegmented= Comparer.compareLists(ListReg2, ListPos2);
-			Comparer.deDuplicate(ListPos2, ListSegmented);
+			ArrayList<Segment> ListSegmented= Comparer.compareLists(listReg, listPOS);
+			listPOS = Comparer.deDuplicate(listPOS, ListSegmented);
 			System.out.println("Time to Segment");
 		
 			Writer.writeXLSXFile(ListSegmented);
 			System.out.println("Done");
-			
-			
 			
 	}
 }

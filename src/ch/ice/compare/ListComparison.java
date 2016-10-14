@@ -3,7 +3,6 @@ package ch.ice.compare;
 import java.util.ArrayList;
 
 import ch.ice.file.SegmentExcelParser;
-import ch.ice.model.Customer;
 import ch.ice.model.Segment;
 
 public class ListComparison {
@@ -33,7 +32,7 @@ public class ListComparison {
 	public JaroWinkler jaroWinkelr = new JaroWinkler();
 	public Segment singleSegment = new Segment();
 	
-	private Segment createLevensteinSegment(){
+	private Segment createSingleSegment(){
 		Segment singleSegment = new Segment();
 		singleSegment.setCompanyName(this.companyName);
 		singleSegment.setLevenDistance(minStringDistance);
@@ -44,19 +43,20 @@ public class ListComparison {
 	
 	}
 	
-	public   ArrayList<Segment> compareLists(ArrayList<Segment> Register, ArrayList<Customer> listPos2){
+	public   ArrayList<Segment> compareLists(ArrayList<Segment> Register, ArrayList<Segment> listPos){
 		regList = readCompanyName(Register);
 			
 		System.out.println("Now we are comparing Lists");
-		for (int i = 0; i < listPos2.size(); i++) {
+		for (int i = 0; i < listPos.size(); i++) {
 			
-			posCompany = (listPos2.get(i).getFullName());
-			exists = listPos2.get(i).isExists();
+			posCompany = (listPos.get(i).getCompanyName());
+			exists = listPos.get(i).isExists();
 			if(exists == false) {
 				this.companyName = posCompany;
 				this.companySegment = "None";
-				this.unprocessedCompanyName = listPos2.get(i).getUnproceesedFullName();
-				segmentedList.add(i,this.createLevensteinSegment());
+				this.unprocessedCompanyName = listPos.get(i).getUnprocessedCompanyName();
+				segmentedList.add(i,this.createSingleSegment());
+				continue;
 			}
 				for (int k = 0; k<Register.size(); k++){
 					
@@ -74,7 +74,7 @@ public class ListComparison {
 						if (minStringDistance <= 0.01){
 							medical++;
 						}
-						segmentedList.add(i,this.createLevensteinSegment());
+						segmentedList.add(i,this.createSingleSegment());
 						minStringDistance = 1;
 					}
 				
@@ -83,10 +83,10 @@ public class ListComparison {
 		}
 	
 		System.out.println(
-				"Amount Medical: " + medical + 
-				";\nAmount Other: " + othercompanies +
+				"Amount Segmented: " + medical + 
+				";\nAmount Unsegmented: " + othercompanies +
 				";\nRegister Size: " + Register.size() +
-				";\nTotal Amount of Companies: " + listPos2.size() +
+				";\nTotal Amount of Companies: " + listPos.size() +
 				";\nSegmented List size: " +segmentedList.size()
 				);
 	
@@ -106,24 +106,20 @@ public class ListComparison {
 			return regList;
 	
 		}
-			public void deDuplicate(ArrayList<Customer> customers, ArrayList<Segment> segmentedCustomers){
+			public ArrayList<Segment>  deDuplicate(ArrayList<Segment> customers, ArrayList<Segment> segmentedCustomers){
 				int d = 1;
 				for(int c = 0; c < customers.size()-1; c=d){
-					if (customers.get(c).isExists()==false) {
-						break;
-					}
 					d = c+1;
 					while( customers.get(c).getId().equals(customers.get(d).getId())){
 						if(segmentedCustomers.get(c).getLevenDistance()<segmentedCustomers.get(d).getLevenDistance()){
-							customers.get(c).setUnproceesedFullName(customers.get(c).getUnproceesedFullName() +", " + customers.get(d).getUnproceesedFullName());
+							customers.get(c).setUnprocessedCompanyName(customers.get(c).getUnprocessedCompanyName() +", " + customers.get(d).getUnprocessedCompanyName());
 							d++;
-							System.out.println(customers.get(c).getUnproceesedFullName());
+							System.out.println(customers.get(c).getUnprocessedCompanyName());
 							dublicates++;
 						} else {
-							
-							customers.get(d).setUnproceesedFullName(customers.get(d).getUnproceesedFullName() +", " + customers.get(c).getUnproceesedFullName());
+							customers.get(d).setUnprocessedCompanyName(customers.get(d).getUnprocessedCompanyName() +", " + customers.get(c).getUnprocessedCompanyName());
 							dublicates2++;
-							System.out.println("Special Case: "+customers.get(d).getUnproceesedFullName());
+							System.out.println("Special Case: "+customers.get(d).getUnprocessedCompanyName());
 						
 						break;
 						}
@@ -131,6 +127,7 @@ public class ListComparison {
 				}
 				}
 			System.out.println("Dublicate count: " +dublicates + "\n Special Case count: "+ dublicates2);
+			return customers;
 			
 			}
 			
