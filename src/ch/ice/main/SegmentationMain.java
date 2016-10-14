@@ -14,18 +14,18 @@ public class SegmentationMain {
 						
 			
 			SegmentExcelParser Parser = new SegmentExcelParser();
+			ListComparison Comparer = new ListComparison();
+			SegmentExcelWriter writer = new SegmentExcelWriter();
 					
 			ArrayList<Segment> listPOS = Parser.readPOSFile();
 			ArrayList<Segment> listReg = Parser.readRegisterFile();
+			ArrayList<Segment> listSegmented= Comparer.compareLists(listReg, listPOS);
 			
-			
-			ListComparison Comparer = new ListComparison();
-			SegmentExcelWriter Writer = new SegmentExcelWriter();
-			ArrayList<Segment> ListSegmented= Comparer.compareLists(listReg, listPOS);
-			listPOS = Comparer.deDuplicate(listPOS, ListSegmented);
+			listPOS = Comparer.deDuplicate(listPOS, listSegmented);
+			listSegmented = null;
 			System.out.println("Time to Segment");
 		
-			Writer.writeXLSXFile(ListSegmented);
+			writer.writeXLSXFile(listPOS);
 			System.out.println("Done");
 			
 	}

@@ -8,8 +8,8 @@ public class Segment {
 	private String unprocessedCompanyName;
 	private  double levenDistance;
 	private boolean exists;
-	private boolean dublicate;
-	private boolean newCompanyName;
+	private boolean dublicate = false;
+	private boolean newCompanyName = false;
 	
 	
 	public boolean isExists() {

@@ -112,22 +112,24 @@ public class ListComparison {
 					d = c+1;
 					while( customers.get(c).getId().equals(customers.get(d).getId())){
 						if(segmentedCustomers.get(c).getLevenDistance()<segmentedCustomers.get(d).getLevenDistance()){
-							customers.get(c).setUnprocessedCompanyName(customers.get(c).getUnprocessedCompanyName() +", " + customers.get(d).getUnprocessedCompanyName());
+							segmentedCustomers.get(c).setCompanyName(customers.get(c).getUnprocessedCompanyName() +", " + customers.get(d).getUnprocessedCompanyName());
 							d++;
-							System.out.println(customers.get(c).getUnprocessedCompanyName());
+							segmentedCustomers.get(c).setNewCompanyName(true);
+							segmentedCustomers.get(d).setDublicate(true);
 							dublicates++;
 						} else {
-							customers.get(d).setUnprocessedCompanyName(customers.get(d).getUnprocessedCompanyName() +", " + customers.get(c).getUnprocessedCompanyName());
+							segmentedCustomers.get(d).setCompanyName(customers.get(d).getUnprocessedCompanyName() +", " + customers.get(c).getUnprocessedCompanyName());
 							dublicates2++;
-							System.out.println("Special Case: "+customers.get(d).getUnprocessedCompanyName());
-						
+							segmentedCustomers.get(d).setNewCompanyName(true);
+							segmentedCustomers.get(c).setDublicate(true);
+							
 						break;
 						}
 							
 				}
 				}
 			System.out.println("Dublicate count: " +dublicates + "\n Special Case count: "+ dublicates2);
-			return customers;
+			return segmentedCustomers;
 			
 			}
 			
