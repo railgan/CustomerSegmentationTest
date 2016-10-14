@@ -25,6 +25,7 @@ public class SegmentExcelParser {
 		}
 		return true;
 	}
+
 	// Variables in which SCHURTER's List of Companies can be found
 	private String companyNamePOS;
 

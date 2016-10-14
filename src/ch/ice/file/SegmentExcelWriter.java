@@ -58,38 +58,35 @@ public class SegmentExcelWriter {
 
 			row = sheet.getRow(rownum++);
 			if (isRowEmpty(row)) {
-				int lastRowNum=sheet.getLastRowNum();
-				if(rownum<lastRowNum){
-				sheet.shiftRows(rownum, lastRowNum, -1);
-				rownum--;
+				int lastRowNum = sheet.getLastRowNum();
+				if (rownum < lastRowNum) {
+					sheet.shiftRows(rownum, lastRowNum, -1);
+					rownum--;
 				}
 				continue;
 			}
 			cell = sheet.getRow(row.getRowNum()).createCell(cellnum);
 
 			if (object.isExists()) {
-				
+
 				if (object.getLevenDistance() <= segmentMargain) {
 					cell.setCellValue(object.getCompanySegment());
 				} else {
 					cell.setCellValue("other");
 				}
-				
-				if (object.isDublicate()){
-					int lastRowNum=sheet.getLastRowNum();
-					System.out.println(lastRowNum);
-					System.out.println(lastRowNum-rownum);
-					System.out.println(rownum);
+
+				if (object.isDublicate()) {
+					int lastRowNum = sheet.getLastRowNum();
 					sheet.removeRow(row);
 					sheet.shiftRows(rownum, lastRowNum, -1);
 					rownum--;
 					continue;
 				}
-				if (object.isNewCompanyName()){
+				if (object.isNewCompanyName()) {
 					cell = sheet.getRow(row.getRowNum()).createCell(6);
 					cell.setCellValue(object.getCompanyName());
 				}
-				
+
 				cell = sheet.getRow(row.getRowNum()).createCell(cellnum + 1);
 				cell.setCellValue(levenDistance);
 				cell = sheet.getRow(row.getRowNum()).createCell(cellnum + 2);
