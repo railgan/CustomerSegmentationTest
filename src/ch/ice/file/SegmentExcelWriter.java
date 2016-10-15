@@ -51,7 +51,25 @@ public class SegmentExcelWriter {
 		cell = sheet.getRow(row.getRowNum()).createCell(13);
 		cell.setCellValue("Comparison Name");
 
-		
+		for (Segment object : segmentCustomerList){
+			row = sheet.getRow(rownum++);
+			if (object.isExists()) {
+				if (object.getLevenDistance() <= segmentMargain) {
+					cell.setCellValue(object.getCompanySegment());
+				} else {
+					cell.setCellValue("other");
+				}
+
+				if (object.isDublicate()) {
+					System.out.println("Dublicate found: " +object.getCompanyName());
+					sheet.removeRow(row);
+					continue;
+				}
+			}
+		}
+		System.out.println("Duplicates deleted");
+		rownum = 3;
+			
 		for (Segment object : segmentCustomerList){
 			row = sheet.getRow(rownum++);
 		if (isRowEmpty(row)) {
@@ -62,11 +80,20 @@ public class SegmentExcelWriter {
 			}
 		}
 		}
+		rownum = 3;
 		System.out.println("Empty Row's removed");
+		
+		
+		
+		
 		rownum = 3;
 
 		// iterating r number of rows
 		for (Segment object : segmentCustomerList) {
+			
+			if (object.isDublicate()) {
+				continue;
+			}
 			
 			levenDistance = object.getLevenDistance();
 			row = sheet.getRow(rownum++);
@@ -79,17 +106,7 @@ public class SegmentExcelWriter {
 					cell.setCellValue("other");
 				}
 
-				if (object.isDublicate()) {
-					System.out.println("Dublicate found: " +object.getCompanyName());
-					int lastRowNum = sheet.getLastRowNum();
-					row = sheet.getRow(rownum-1);
-					sheet.removeRow(row);
-					if (rownum < lastRowNum) {
-					sheet.shiftRows(rownum, lastRowNum, -1);
-					rownum--;
-					}
-					continue;
-				}
+				
 				if (object.isNewCompanyName()) {
 					cell = sheet.getRow(row.getRowNum()).createCell(6);
 					cell.setCellValue(object.getCompanyName());
