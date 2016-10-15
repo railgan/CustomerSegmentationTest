@@ -106,27 +106,31 @@ public class ListComparison {
 		for (int c = 0; c < customers.size() - 1; c = d) {
 			d = c + 1;
 			while (customers.get(c).getId().equals(customers.get(d).getId())) {
-				if (segmentedCustomers.get(c).getLevenDistance() < segmentedCustomers.get(d).getLevenDistance()) {
-					segmentedCustomers.get(c).setCompanyName(customers.get(c).getUnprocessedCompanyName() + ", "
+				if (segmentedCustomers.get(c).getLevenDistance() <= segmentedCustomers.get(d).getLevenDistance()) {
+					customers.get(c).setUnprocessedCompanyName(customers.get(c).getUnprocessedCompanyName() + ", "
 							+ customers.get(d).getUnprocessedCompanyName());
-					d++;
+					segmentedCustomers.get(c).setCompanyName(customers.get(c).getUnprocessedCompanyName());					
 					segmentedCustomers.get(c).setNewCompanyName(true);
 					segmentedCustomers.get(d).setDublicate(true);
+					d++;
 					dublicates++;
+					
 				} else {
-					segmentedCustomers.get(d).setCompanyName(customers.get(d).getUnprocessedCompanyName() + ", "
+					customers.get(d).setUnprocessedCompanyName(customers.get(d).getUnprocessedCompanyName() + ", "
 							+ customers.get(c).getUnprocessedCompanyName());
+					segmentedCustomers.get(d).setCompanyName(customers.get(d).getUnprocessedCompanyName());
 					dublicates2++;
 					segmentedCustomers.get(d).setNewCompanyName(true);
 					segmentedCustomers.get(c).setDublicate(true);
-
 					break;
 				}
 
 			}
 		}
-		System.out.println("Dublicate count: " + dublicates + "\n Special Case count: " + dublicates2);
+		System.out.println("Top down Duplicates count: " + dublicates + "\n Bottm up Duplicates count: " + dublicates2);
 		return segmentedCustomers;
+//		Top down Duplicates count: 638
+//		 Bottm up Duplicates count: 311
 
 	}
 

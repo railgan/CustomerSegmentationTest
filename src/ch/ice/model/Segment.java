@@ -74,4 +74,6 @@ public class Segment {
 	public void setDublicate(boolean dublicate) {
 		this.dublicate = dublicate;
 	}
+
+	
 }

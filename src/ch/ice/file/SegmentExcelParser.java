@@ -74,8 +74,8 @@ public class SegmentExcelParser {
 	public ArrayList<Segment> readPOSFile() throws IOException {
 
 		// Where the Test file has to be located
-		// InputStream ExcelFileToRead = new
-		// FileInputStream("C:/Javatest/POS.xlsx");
+	
+
 		InputStream ExcelFileToRead = new FileInputStream("C:/Javatest/SPOSDES_Test.xlsx");
 
 		XSSFWorkbook wb = new XSSFWorkbook(ExcelFileToRead);
@@ -92,14 +92,14 @@ public class SegmentExcelParser {
 			if (row.getRowNum() == 0 || row.getRowNum() == 1 || row.getRowNum() == 2)
 				continue;
 			if (isRowEmpty(row)) {
-
-				int lastRowNum = sheet.getLastRowNum();
-				int rowIndex = row.getRowNum();
-				sheet.shiftRows(rowIndex + 1, lastRowNum, -1);
-				rows = sheet.rowIterator();
-				if (rowIndex == lastRowNum) {
-					break;
-				}
+//
+//				int lastRowNum = sheet.getLastRowNum();
+//				int rowIndex = row.getRowNum();
+//				sheet.shiftRows(rowIndex + 1, lastRowNum, -1);
+//				rows = sheet.rowIterator();
+//				if (rowIndex == lastRowNum) {
+//					break;
+//				}
 				continue;
 			}
 			if (row.getRowNum() == 0 || row.getRowNum() == 1 || row.getRowNum() == 2)

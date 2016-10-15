@@ -20,11 +20,14 @@ public class SegmentationMain {
 		ArrayList<Segment> listReg = Parser.readRegisterFile();
 		ArrayList<Segment> listSegmented = Comparer.compareLists(listReg, listPOS);
 
-		listPOS = Comparer.deDuplicate(listPOS, listSegmented);
-		listSegmented = null;
+		
+		System.out.println("Time to deduplicate");
+		listSegmented = Comparer.deDuplicate(listPOS, listSegmented);
+		listPOS = null;
 		System.out.println("Time to Segment");
 
-		writer.writeXLSXFile(listPOS);
+				
+		writer.writeXLSXFile(listSegmented);
 		System.out.println("Done");
 
 	}

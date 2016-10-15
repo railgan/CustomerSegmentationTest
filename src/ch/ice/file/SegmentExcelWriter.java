@@ -26,8 +26,8 @@ public class SegmentExcelWriter {
 	public void writeXLSXFile(ArrayList<Segment> segmentCustomerList) throws IOException {
 
 		String excelFileName = "C:/Javatest/Segmented" + dateFormat.format(date) + ".xlsx";
-		// String oldExcelFile = "C:/Javatest/POS.xlsx";
 		String oldExcelFile = "C:/Javatest/SPOSDES_Test.xlsx";
+		
 
 		int cellnum;
 		int rownum;
@@ -51,24 +51,28 @@ public class SegmentExcelWriter {
 		cell = sheet.getRow(row.getRowNum()).createCell(13);
 		cell.setCellValue("Comparison Name");
 
+		
+		for (Segment object : segmentCustomerList){
+			row = sheet.getRow(rownum++);
+		if (isRowEmpty(row)) {
+			int lastRowNum = sheet.getLastRowNum();
+			if (rownum < lastRowNum) {
+				sheet.shiftRows(rownum, lastRowNum, -1);
+				rownum--;
+			}
+		}
+		}
+		System.out.println("Empty Row's removed");
+		rownum = 3;
+
 		// iterating r number of rows
 		for (Segment object : segmentCustomerList) {
-
+			
 			levenDistance = object.getLevenDistance();
-
 			row = sheet.getRow(rownum++);
-			if (isRowEmpty(row)) {
-				int lastRowNum = sheet.getLastRowNum();
-				if (rownum < lastRowNum) {
-					sheet.shiftRows(rownum, lastRowNum, -1);
-					rownum--;
-				}
-				continue;
-			}
 			cell = sheet.getRow(row.getRowNum()).createCell(cellnum);
 
 			if (object.isExists()) {
-
 				if (object.getLevenDistance() <= segmentMargain) {
 					cell.setCellValue(object.getCompanySegment());
 				} else {
@@ -76,10 +80,14 @@ public class SegmentExcelWriter {
 				}
 
 				if (object.isDublicate()) {
+					System.out.println("Dublicate found: " +object.getCompanyName());
 					int lastRowNum = sheet.getLastRowNum();
+					row = sheet.getRow(rownum-1);
 					sheet.removeRow(row);
+					if (rownum < lastRowNum) {
 					sheet.shiftRows(rownum, lastRowNum, -1);
 					rownum--;
+					}
 					continue;
 				}
 				if (object.isNewCompanyName()) {
@@ -122,13 +130,11 @@ public class SegmentExcelWriter {
 	public static boolean isRowEmpty(XSSFRow row) {
 
 		if (row == null) {
-			return true;
-		}
-		for (int c = row.getFirstCellNum(); c < row.getLastCellNum(); c++) {
-			Cell cell = row.getCell(c);
-			if (cell != null && cell.getCellType() != Cell.CELL_TYPE_BLANK)
-				return false;
-		}
-		return true;
+	        return true;
+	    } else if (row.getLastCellNum() <= 0) {
+	        return true;
+	    } else {
+	    	return false;
+	    }
 	}
 }
